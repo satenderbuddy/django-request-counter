@@ -11,7 +11,8 @@ Install my-project with pip
 ```bash
   pip install django-request-counter
 ```
-Add the app in installed apps
+In settings.py add below
+Add the app in installed apps 
 ```
 INSTALLED_APPS = [
     ...
@@ -31,6 +32,11 @@ urlpartterns = [
     ...
     path("",include("request_counter.urls")),
 ]
+```
+Set Redis Url
+```
+# REDIS_URL = "redis://localhost:6379/7"
+REDIS_URL = "<your redis url path>"
 ```
 You need to setup cron to periodically save the data into database by by default it store data into database
 ```
