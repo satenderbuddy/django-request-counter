@@ -1,5 +1,7 @@
 #!/usr/bin/env python
+import setuptools
 
 if __name__ == "__main__":
-    import setuptools
-    setuptools.setup()
+    setuptools.setup(
+        name="request-counter", version="1.0.0", packages=["request_counter"]
+    )

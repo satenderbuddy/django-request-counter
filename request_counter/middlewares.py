@@ -10,7 +10,7 @@ class APICounterMiddleware:
 
     def __init__(self, get_response):
         self.get_response = get_response
-        url = getattr(settings,"REDIS_URL", "redis://localhost:6379/7")
+        url = getattr(settings, "REDIS_URL", "redis://localhost:6379/7")
         # Adjust connection settings
         self.redis_client = redis.from_url(url)
 
