@@ -11,7 +11,7 @@ class Command(BaseCommand):
     help = "Store cumulative API request counts in the database"
 
     def handle(self, *args, **options):
-        url = settings.CACHES["default"]["LOCATION"]
+        url = getattr(settings, "REDIS_URL", "redis://localhost:6379/7")
         # Adjust connection settings
         redis_client = redis.from_url(url)
         keys = redis_client.keys("api_request_count:*")
