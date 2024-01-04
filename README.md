@@ -9,7 +9,7 @@ Install this app to get request count of all the api
 Install my-project with pip
 
 ```bash
-  pip install django-request-counter
+  pip install request-counter
 ```
 In settings.py add below
 Add the app in installed apps 
