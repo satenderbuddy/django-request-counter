@@ -4,7 +4,7 @@ import setuptools
 if __name__ == "__main__":
     setuptools.setup(
         name="request-counter",
-        version="1.1.0",
+        version="1.2.0",
         packages=[
             "request_counter",
             "request_counter/management/commands",
