@@ -10,5 +10,5 @@ urlpatterns = [
     path(
         "api-count/redis",
         views.RedisCounterViewSet.as_view({"get": "get", "delete": "delete"}),
-    )
+    ),
 ]
