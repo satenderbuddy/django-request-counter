@@ -35,10 +35,14 @@ urlpartterns = [
 ```
 Set Redis Url
 ```
-# REDIS_URL = "redis://localhost:6379/7" # by default
+# REDIS_URL = "redis://localhost:6379/7" # by default when not set
 REDIS_URL = "<your redis url path>"
-API_START_PATH = "/api/" # by default set "" for monitoring all path
+
+API_START_PATH = "/api/" # by default set "" for monitoring all path default /api/ when not set 
 API_START_PATH = "<your starting path>"
+
+# DB_FOR_REQUEST_COUNTER = "default" # by default it is set as default database when not set
+DB_FOR_REQUEST_COUNTER = "<your desired database>"
 
 ```
 You need to setup cron to periodically save the data into default database 
