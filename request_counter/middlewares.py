@@ -8,6 +8,10 @@ class APICounterMiddleware:
 
     RC_API_START_PATH = getattr(settings, "RC_RC_API_START_PATH", "/api/")
     RC_ENVIRONMENT_PREFIX = getattr(settings, "RC_ENVIRONMENT", "")
+    # default 1 day
+    RC_REDIS_EXPIRE_SECONDS = getattr(
+        settings, "RC_REDIS_EXPIRE_SECONDS", 86400
+    )
 
     def __init__(self, get_response):
         self.get_response = get_response
@@ -33,4 +37,6 @@ class APICounterMiddleware:
             current_count = 0
         else:
             current_count = int(current_count)
-        self.redis_client.set(path_key, current_count + 1)
+        self.redis_client.set(
+            path_key, current_count + 1, keepttl=self.RC_REDIS_EXPIRE_SECONDS
+        )

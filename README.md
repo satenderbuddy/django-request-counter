@@ -51,6 +51,8 @@ RC_DATABASE = "<your desired database>"
 RC_ENVIRONMENT = "" # add prefix on your database path to identify
 RC_ENVIRONMENT = "<your environment>"
 
+RC_REDIS_EXPIRE_SECONDS = 86400 # redis key ttl expiry seconds
+
 ```
 You need to setup cron to periodically save the data into default database 
 ```
