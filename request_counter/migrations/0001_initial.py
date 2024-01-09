@@ -17,7 +17,9 @@ class Migration(migrations.Migration):
                 ("updated_at", models.DateTimeField(auto_now=True)),
                 (
                     "path",
-                    models.CharField(max_length=200, primary_key=True, serialize=False),
+                    models.CharField(
+                        max_length=200, primary_key=True, serialize=False
+                    ),
                 ),
                 ("count", models.PositiveBigIntegerField(default=0)),
             ],

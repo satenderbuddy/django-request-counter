@@ -8,6 +8,8 @@ from rest_framework.viewsets import ModelViewSet
 
 from .models import ApiRequestCounter
 
+RC_ENVIRONMENT_PREFIX = getattr(settings, "RC_ENVIRONMENT", "")
+
 
 class ApiCounterSerializer(serializers.ModelSerializer):
     """api counter serializer"""
@@ -32,7 +34,9 @@ class ApiCounterViewSet(ModelViewSet):
     pagination_class = Paginator
     page_size = 10
     serializer_class = ApiCounterSerializer
-    queryset = ApiRequestCounter.objects.all().order_by("-count")
+    queryset = ApiRequestCounter.objects.filter(
+        path__startswith=RC_ENVIRONMENT_PREFIX
+    ).order_by("-count")
 
     def delete(self, request, *args, **kwargs):
         """clearing the database record of api counter"""
@@ -49,7 +53,7 @@ class RedisCounterViewSet(ModelViewSet):
     def get(self, *args, **kwargs):
         """get api view for redis view"""
         redis_client = redis.from_url(self.URL)
-        keys = redis_client.keys("api_request_count:*")
+        keys = redis_client.keys(f"api_request_count:{RC_ENVIRONMENT_PREFIX}*")
         data = []
         for key in keys:
             data.append(
@@ -64,7 +68,7 @@ class RedisCounterViewSet(ModelViewSet):
     def delete(self, *args, **kwargs):
         """clearing the redis record of api counter"""
         redis_client = redis.from_url(self.URL)
-        keys = redis_client.keys("api_request_count:*")
+        keys = redis_client.keys(f"api_request_count:{RC_ENVIRONMENT_PREFIX}*")
         for key in keys:
             redis_client.delete(key, 0)
         return Response("Redis count reset", status=204)

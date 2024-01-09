@@ -23,5 +23,7 @@ class Command(BaseCommand):
             instance, _ = ApiRequestCounter.objects.get_or_create(path=path)
             instance.count += count
             instance.save()
-            redis_client.set(key, 0)
-        self.stdout.write(self.style.SUCCESS("Stored API counts in the database"))
+            redis_client.delete(key)
+        self.stdout.write(
+            self.style.SUCCESS("Stored API counts in the database")
+        )

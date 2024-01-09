@@ -1,7 +1,7 @@
 """models to store data to database"""
+from django.conf import settings
 from django.db import models
 from django.db.models.manager import BaseManager
-from django.conf import settings
 from django.db.models.query import QuerySet
 
 
@@ -13,11 +13,15 @@ class DbBaseManager(BaseManager):
         Return a new QuerySet object. Subclasses can override this method to
         customize the behavior of the Manager.
         """
-        database = getattr(settings, "DB_FOR_REQUEST_COUNTER", self._db)
-        return self._queryset_class(model=self.model, using=database, hints=self._hints)
+        database = getattr(settings, "RC_DATABASE", self._db)
+        return self._queryset_class(
+            model=self.model, using=database, hints=self._hints
+        )
+
 
 class ApiRequestManager(DbBaseManager.from_queryset(QuerySet)):
     """api request Manager"""
+
 
 class ApiRequestCounter(models.Model):
     """api counter model"""
@@ -28,5 +32,6 @@ class ApiRequestCounter(models.Model):
     count = models.BigIntegerField(default=0)
 
     objects = ApiRequestManager()
+
     class Meta:
         db_table = "api_request_counter"

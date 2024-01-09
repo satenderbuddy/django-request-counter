@@ -33,16 +33,23 @@ urlpartterns = [
     path("",include("request_counter.urls")),
 ]
 ```
-Set Redis Url
+Set environment variable in settings.py file
 ```
+# set up redis ur;
 # REDIS_URL = "redis://localhost:6379/7" # by default when not set
 REDIS_URL = "<your redis url path>"
 
-API_START_PATH = "/api/" # by default set "" for monitoring all path default /api/ when not set 
-API_START_PATH = "<your starting path>"
+# api path that starts with that needs monitoring
+RC_API_START_PATH = "/api/" # by default set "" for monitoring all path default /api/ when not set 
+RC_API_START_PATH = "<your starting path>"
 
-# DB_FOR_REQUEST_COUNTER = "default" # by default it is set as default database when not set
-DB_FOR_REQUEST_COUNTER = "<your desired database>"
+# database where you want to store the result after running script
+# RC_DATABASE = "default" # by default it is set as default database when not set
+RC_DATABASE = "<your desired database>"
+
+# when saving on 1 database but have many environment
+RC_ENVIRONMENT = "" # add prefix on your database path to identify
+RC_ENVIRONMENT = "<your environment>"
 
 ```
 You need to setup cron to periodically save the data into default database 

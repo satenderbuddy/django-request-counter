@@ -6,7 +6,8 @@ from django.conf import settings
 class APICounterMiddleware:
     """api counter to store in redis"""
 
-    API_START_PATH = getattr(settings, "API_START_PATH", "/api/")
+    RC_API_START_PATH = getattr(settings, "RC_RC_API_START_PATH", "/api/")
+    RC_ENVIRONMENT_PREFIX = getattr(settings, "RC_ENVIRONMENT", "")
 
     def __init__(self, get_response):
         self.get_response = get_response
@@ -16,8 +17,11 @@ class APICounterMiddleware:
 
     def __call__(self, request):
         # Modify this path to match your API endpoints
-        if request.path.startswith(self.API_START_PATH):
-            self.increment_request_count(request.path)
+        if request.path.startswith(self.RC_API_START_PATH):
+            path = request.path
+            if self.RC_ENVIRONMENT_PREFIX:
+                path = f"{self.RC_ENVIRONMENT_PREFIX} {path}"
+            self.increment_request_count(path)
         response = self.get_response(request)
         return response
 
